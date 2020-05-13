@@ -1,0 +1,71 @@
+UPDATE
+  accessories
+SET
+  categoryId='Кошельки'
+WHERE accessories.categoryId = "3626";
+
+DELETE from accessories
+WHERE accessories.categoryId <> "Кошельки";
+
+UPDATE
+  accessories
+SET
+  param='Унисекс'
+WHERE accessories.param like "%Унисекс%";
+
+UPDATE
+  accessories
+SET
+  param='Мужчинам'
+WHERE accessories.param like "%Для мужчин%" or "%Мужские%";
+
+UPDATE
+  accessories
+SET
+  param='Женщинам'
+WHERE accessories.param like "%Для женщин%" or "%Женские%";
+
+UPDATE
+  accessories
+SET
+  param='Унисекс'
+WHERE accessories.param not like "Женщинам" or "Мужчинам" or "Унисекс";
+
+UPDATE
+  accessories
+SET
+  param='Тест'
+WHERE accessories.param is NULL;
+
+CREATE TABLE "accessories2" (
+	"Артикул"	INTEGER,
+	"Описание"	TEXT,
+	"Имя"	TEXT,
+	"Изображения"	TEXT,
+	"Базовая цена"	INTEGER,
+	"Имя атрибута 2"	TEXT,
+	"Значение(-я) аттрибута(-ов) 2"	TEXT,
+	"Имя атрибута 1"	TEXT,
+	"Значение(-я) аттрибута(-ов) 1"	TEXT,
+	"Категории"	INTEGER
+);
+
+INSERT INTO accessories2 (Артикул, Имя, Описание, "Базовая цена", Категории, Изображения, "Значение(-я) аттрибута(-ов) 1")
+SELECT vendorCode, name, description, price, categoryId, picture, param FROM accessories;
+
+UPDATE
+  accessories2
+SET
+  'Имя атрибута 1'='Пол';
+
+update accessories2
+SET 
+Изображения = REPLACE(Изображения, "https://", ", https://");
+
+update accessories2
+SET 
+Изображения = SUBSTR (Изображения, 3 );
+
+update accessories2
+SET 
+Описание = REPLACE(Описание, "[DELIMITER]", ",");
